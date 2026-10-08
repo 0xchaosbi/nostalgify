@@ -1,0 +1,696 @@
+/* Nostalgify site. Each skin gets its own page theme via html[data-skin]. */
+
+:root,
+:root[data-skin="green"] {
+  --bg: #020702;
+  --bg2: #061206;
+  --panel: #0a170a;
+  --panel-hi: #2f6b2f;
+  --panel-lo: #000000;
+  --fg: #b9f3b1;
+  --muted: #6fa86a;
+  --accent: #39ff14;
+  --accent2: #d4ff3a;
+  --line: #1c4a1c;
+  --glow: 0 0 6px rgba(57, 255, 20, 0.75), 0 0 22px rgba(57, 255, 20, 0.35);
+  --title-bg: linear-gradient(90deg, #0b3d0b, #1f7a1f 60%, #0b3d0b);
+  --title-fg: #eaffea;
+  --scan: rgba(0, 0, 0, 0.28);
+  --star: #8dff7a;
+  --sel: rgba(57, 255, 20, 0.3);
+  --stage: #010401;
+  color-scheme: dark;
+}
+
+:root[data-skin="necro"] {
+  --bg: #07040a;
+  --bg2: #1c0e26;
+  --panel: #120a18;
+  --panel-hi: #6f5a74;
+  --panel-lo: #000000;
+  --fg: #ddcdd3;
+  --muted: #8f7a92;
+  --accent: #e9d6c4;
+  --accent2: #b98cff;
+  --line: #3a2546;
+  --glow: 0 0 6px rgba(233, 214, 196, 0.45), 0 0 24px rgba(185, 140, 255, 0.35);
+  --title-bg: linear-gradient(90deg, #1a0d24, #5a3f68 60%, #1a0d24);
+  --title-fg: #f2e6ea;
+  --scan: rgba(0, 0, 0, 0.3);
+  --star: #c9b3b9;
+  --sel: rgba(185, 140, 255, 0.28);
+  --stage: #050208;
+  color-scheme: dark;
+}
+
+:root[data-skin="kari"] {
+  --bg: #f7f1fd;
+  --bg2: #ffe9f3;
+  --panel: #ffffff;
+  --panel-hi: #ffffff;
+  --panel-lo: #b9a2d6;
+  --fg: #35264f;
+  --muted: #8a78a8;
+  --accent: #9b5de5;
+  --accent2: #ff5c9a;
+  --line: #e3d5f5;
+  --glow: 0 0 0 transparent;
+  --title-bg: linear-gradient(90deg, #c9a7ff, #e7b6ff 50%, #ff9ccf);
+  --title-fg: #ffffff;
+  --scan: rgba(255, 255, 255, 0);
+  --star: #ffd166;
+  --sel: rgba(155, 93, 229, 0.22);
+  --stage: #2a1d3d;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 70% -10%, var(--bg2), transparent 60%), var(--bg);
+  color: var(--fg);
+  font-family: "VT323", ui-monospace, Menlo, monospace;
+  font-size: 22px;
+  line-height: 1.35;
+  transition: background-color 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--sel);
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--accent2);
+}
+
+code,
+kbd {
+  font-family: "VT323", ui-monospace, monospace;
+  font-size: 1em;
+  padding: 0 0.3em;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+kbd {
+  border-bottom-width: 3px;
+  border-radius: 3px;
+}
+
+.wrap {
+  width: min(1180px, 100% - 32px);
+  margin-inline: auto;
+}
+
+/* ---------- atmosphere ---------- */
+.crt {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, var(--scan) 2px 3px);
+  mix-blend-mode: multiply;
+}
+:root[data-skin="necro"] .crt {
+  box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.9);
+}
+
+.stars {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.55;
+  background-image: radial-gradient(1px 1px at 10% 20%, var(--star), transparent),
+    radial-gradient(1px 1px at 30% 80%, var(--star), transparent),
+    radial-gradient(2px 2px at 55% 35%, var(--star), transparent),
+    radial-gradient(1px 1px at 75% 60%, var(--star), transparent),
+    radial-gradient(1px 1px at 90% 15%, var(--star), transparent),
+    radial-gradient(2px 2px at 15% 65%, var(--star), transparent),
+    radial-gradient(1px 1px at 45% 90%, var(--star), transparent),
+    radial-gradient(1px 1px at 85% 85%, var(--star), transparent);
+  background-size: 420px 420px;
+  animation: drift 120s linear infinite;
+}
+@keyframes drift {
+  to {
+    background-position: 420px 840px;
+  }
+}
+
+/* ---------- header ---------- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 0;
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-family: "Press Start 2P", monospace;
+  font-size: 18px;
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+.brand img {
+  image-rendering: pixelated;
+}
+.site-header nav {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.site-header nav a {
+  color: var(--fg);
+  text-decoration: none;
+}
+.site-header nav a:hover {
+  color: var(--accent);
+}
+
+/* ---------- hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 48px;
+  align-items: start;
+  padding: 36px 0 64px;
+}
+.kicker {
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+h1 {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(22px, 3.2vw, 38px);
+  line-height: 1.35;
+  margin: 0 0 24px;
+}
+.glow {
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+:root[data-skin="kari"] .glow {
+  background: linear-gradient(90deg, var(--accent), #b28cff, var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lede {
+  font-size: 25px;
+  max-width: 34em;
+  margin: 0 0 28px;
+}
+.cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.fineprint {
+  color: var(--muted);
+  font-size: 19px;
+  margin-top: 16px;
+}
+
+/* Win98-style bevelled buttons */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--fg);
+  background: var(--panel);
+  border: 2px solid;
+  border-color: var(--panel-hi) var(--panel-lo) var(--panel-lo) var(--panel-hi);
+  box-shadow: 3px 3px 0 var(--panel-lo);
+  padding: 2px;
+}
+.btn-face {
+  display: block;
+  padding: 10px 18px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 12px;
+  border: 1px dotted transparent;
+}
+.btn:hover .btn-face {
+  border-color: var(--muted);
+}
+.btn:active {
+  border-color: var(--panel-lo) var(--panel-hi) var(--panel-hi) var(--panel-lo);
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #001400;
+}
+:root[data-skin="kari"] .btn-primary {
+  color: #fff;
+}
+.btn-primary:hover {
+  color: #001400;
+  background: var(--accent2);
+}
+
+/* ---------- the demo window ---------- */
+.window {
+  background: var(--panel);
+  border: 2px solid;
+  border-color: var(--panel-hi) var(--panel-lo) var(--panel-lo) var(--panel-hi);
+  box-shadow: 6px 6px 0 var(--panel-lo), 0 0 60px rgba(0, 0, 0, 0.35);
+}
+.window-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background: var(--title-bg);
+  color: var(--title-fg);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+}
+.window-buttons {
+  display: flex;
+  gap: 4px;
+}
+.window-buttons i {
+  width: 14px;
+  height: 12px;
+  background: var(--panel);
+  border: 1px solid;
+  border-color: var(--panel-hi) var(--panel-lo) var(--panel-lo) var(--panel-hi);
+}
+.stage {
+  position: relative;
+  min-height: 300px;
+  margin: 10px;
+  overflow: hidden;
+  background: repeating-linear-gradient(45deg, transparent 0 10px, rgba(255, 255, 255, 0.04) 10px 20px),
+    var(--stage);
+  border: 2px solid;
+  border-color: var(--panel-lo) var(--panel-hi) var(--panel-hi) var(--panel-lo);
+}
+.stage-note {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+  margin: 0;
+  color: var(--muted);
+}
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 10000;
+  margin: 0;
+  padding: 6px 12px;
+  background: var(--panel);
+  border: 1px solid var(--accent);
+  color: var(--fg);
+  font-size: 18px;
+  white-space: nowrap;
+}
+.skin-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0 10px 10px;
+}
+.skin-btn {
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.1;
+  text-align: left;
+  color: var(--fg);
+  background: var(--panel);
+  border: 2px solid;
+  border-color: var(--panel-hi) var(--panel-lo) var(--panel-lo) var(--panel-hi);
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.skin-btn small {
+  display: block;
+  color: var(--muted);
+  font-size: 15px;
+}
+.skin-btn[aria-checked="true"] {
+  border-color: var(--panel-lo) var(--panel-hi) var(--panel-hi) var(--panel-lo);
+  background: var(--sel);
+  color: var(--accent);
+}
+.skin-btn[aria-checked="true"]::before {
+  content: "▶ ";
+}
+.terminal-copy:focus-visible,
+.skin-btn:focus-visible,
+.btn:focus-visible,
+summary:focus-visible {
+  outline: 2px dashed var(--accent2);
+  outline-offset: 3px;
+}
+.stage-caption {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 14px 4px 0;
+}
+
+/* ---------- sections ---------- */
+section {
+  padding: 40px 0;
+}
+.section-title {
+  font-family: "Press Start 2P", monospace;
+  font-size: 15px;
+  color: var(--accent);
+  text-shadow: var(--glow);
+  margin: 0 0 26px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 10px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 26px;
+  height: 4px;
+  background: var(--accent);
+}
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  color: var(--accent2);
+}
+:root[data-skin="kari"] .card h3 {
+  color: var(--accent);
+}
+.card p {
+  margin: 0;
+}
+
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+  max-width: 50em;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 64px;
+}
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+.readme {
+  background: var(--panel);
+  border: 1px dashed var(--line);
+  padding: 18px 24px;
+  max-width: 50em;
+}
+.readme p {
+  margin-top: 0;
+}
+.readme ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.readme li {
+  margin: 6px 0;
+}
+
+.install-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.install-steps.four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.section-lede {
+  max-width: 50em;
+  margin: -8px 0 22px;
+}
+.skin-notes {
+  margin-top: 18px;
+}
+.terminal {
+  max-width: 50em;
+  background: #000;
+  border: 2px solid;
+  border-color: var(--panel-lo) var(--panel-hi) var(--panel-hi) var(--panel-lo);
+  box-shadow: 4px 4px 0 var(--panel-lo);
+}
+.terminal-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px 4px 10px;
+  background: var(--title-bg);
+  color: var(--title-fg);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+}
+.terminal-copy {
+  font: inherit;
+  color: var(--fg);
+  background: var(--panel);
+  border: 2px solid;
+  border-color: var(--panel-hi) var(--panel-lo) var(--panel-lo) var(--panel-hi);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.terminal-copy:active {
+  border-color: var(--panel-lo) var(--panel-hi) var(--panel-hi) var(--panel-lo);
+}
+.terminal pre {
+  margin: 0;
+  padding: 14px 18px;
+  overflow-x: auto;
+  color: #39ff14;
+  text-shadow: 0 0 6px rgba(57, 255, 20, 0.5);
+  font-size: 22px;
+  line-height: 1.4;
+}
+.terminal code {
+  font-family: "VT323", ui-monospace, monospace;
+  border: 0;
+  padding: 0;
+  background: none;
+}
+.install-steps.after-terminal {
+  margin-top: 22px;
+}
+.alt-install {
+  max-width: 50em;
+  margin-top: 18px;
+  border: 1px dashed var(--line);
+  background: var(--panel);
+}
+.alt-install summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  list-style: none;
+}
+.alt-install summary::-webkit-details-marker {
+  display: none;
+}
+.alt-install summary::before {
+  content: "[+] ";
+  color: var(--accent);
+}
+.alt-install[open] summary::before {
+  content: "[-] ";
+}
+.alt-install p {
+  margin: 0;
+  padding: 0 14px 14px;
+}
+.install-steps li {
+  display: flex;
+  gap: 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 18px;
+}
+.install-steps .n {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: #001400;
+  font-family: "Press Start 2P", monospace;
+  font-size: 14px;
+}
+:root[data-skin="kari"] .install-steps .n {
+  color: #fff;
+}
+.install-steps h3 {
+  margin: 4px 0 6px;
+  font-size: 26px;
+}
+.install-steps p {
+  margin: 0;
+}
+
+.faq details {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  margin-bottom: 10px;
+  max-width: 50em;
+}
+.faq summary {
+  cursor: pointer;
+  padding: 12px 16px;
+  font-size: 24px;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary::before {
+  content: "[+] ";
+  color: var(--accent);
+}
+.faq details[open] summary::before {
+  content: "[-] ";
+}
+.faq details p {
+  margin: 0;
+  padding: 0 16px 14px 56px;
+}
+
+/* ---------- footer ---------- */
+.site-footer {
+  border-top: 2px solid var(--line);
+  padding: 30px 0 60px;
+  color: var(--muted);
+  font-size: 19px;
+}
+.donate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  padding: 20px 24px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--fg);
+}
+.donate > div {
+  flex: 1 1 420px;
+}
+.donate h2 {
+  margin: 0 0 8px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--accent);
+}
+.donate p {
+  margin: 0;
+  font-size: 20px;
+}
+.skin-credit b {
+  color: var(--fg);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .grid,
+  .install-steps,
+  .install-steps.four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 680px) {
+  body {
+    font-size: 20px;
+  }
+  .grid,
+  .install-steps,
+  .install-steps.four {
+    grid-template-columns: 1fr;
+  }
+  .skin-picker {
+    grid-template-columns: 1fr;
+  }
+  .site-header nav {
+    gap: 14px;
+    font-size: 19px;
+  }
+  .faq details p {
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" data-skin="green">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nostalgify · Winamp skins for Spotify on Mac</title>
+    <meta
+      name="description"
+      content="A tiny macOS app that turns real, archived Winamp 2 skins into a remote control for the Spotify desktop app."
+    />
+    <meta property="og:title" content="Nostalgify" />
+    <meta property="og:description" content="Real Winamp skins. Your Spotify. It's 2001 forever." />
+    <meta name="theme-color" content="#030a03" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="crt" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true"></div>
+
+    <header class="site-header wrap">
+      <a class="brand" href="#top" aria-label="Nostalgify home">
+        <img src="favicon.png" alt="" width="32" height="32" />
+        <span>NOSTALGIFY</span>
+      </a>
+      <nav>
+        <a href="#how">How it works</a>
+        <a href="#install">Install</a>
+        <a href="#skins">Skins</a>
+        <a href="#faq">FAQ</a>
+        <a class="js-repo-link" href="https://github.com/0xchaosbi/nostalgify">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <p class="kicker">macOS · free · open source</p>
+          <h1>Your Spotify,<br /><span class="glow">wearing a real Winamp skin.</span></h1>
+          <p class="lede">
+            Nostalgify is a tiny Mac app that plays your Spotify through classic Winamp&nbsp;2 skins. They're the real
+            <code>.wsz</code> files people made in Winamp's heyday, preserved by the Internet Archive. Drop one in a folder and
+            it just works.
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#install"><span class="btn-face">⌨ Install it</span></a>
+            <a class="btn" href="https://github.com/0xchaosbi/nostalgify"><span class="btn-face">View on GitHub</span></a>
+          </div>
+          <p class="fineprint">Needs the Spotify desktop app. Apple Silicon and Intel.</p>
+        </div>
+
+        <div class="stage-wrap">
+          <div class="window">
+            <div class="window-title">
+              <span>nostalgify_demo.exe</span>
+              <span class="window-buttons" aria-hidden="true"><i></i><i></i><i></i></span>
+            </div>
+            <div class="stage" id="stage">
+              <noscript>
+                <p class="stage-note">Turn on JavaScript to play with the live demo.</p>
+              </noscript>
+              <p class="stage-note js-stage-note" hidden></p>
+            </div>
+            <div class="skin-picker" role="radiogroup" aria-label="Choose a skin">
+              <!-- Filled in by site.js -->
+            </div>
+          </div>
+          <p class="stage-caption">
+            ↑ That's the real thing, running <a href="https://github.com/captbaritone/webamp">Webamp</a>. Press play.
+            The demo song is an original chiptune. The app plays your Spotify instead.
+          </p>
+        </div>
+      </section>
+
+      <section class="features wrap" aria-labelledby="features-title">
+        <h2 id="features-title" class="section-title"><span>// FEATURES.TXT</span></h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Real skins, not lookalikes</h3>
+            <p>
+              Any classic Winamp 2 skin works. There are over 100,000 in the Internet Archive and the Winamp Skin Museum.
+              Drop a <code>.wsz</code> into the skins folder and it shows up in the menu instantly. Cmd+R picks one at random.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Spotify does the work, out of sight</h3>
+            <p>
+              Nostalgify opens Spotify in the background and keeps it hidden. Play, pause, skip, seek, volume, shuffle and
+              repeat all go straight to Spotify.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Scales without blurring</h3>
+            <p>
+              Drag the corner to make it bigger. Skins are pixel art, so they scale in crisp steps. Cmd+1, 2 and 3 give
+              you single, double and triple size.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Muscle memory included</h3>
+            <p>
+              <kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd> <kbd>B</kbd> for previous, play, pause, stop and next.
+              Arrow keys seek. Eject opens Spotify so you can pick something, then hops back.
+            </p>
+          </article>
+          <article class="card">
+            <h3>A shelf for your music</h3>
+            <p>
+              Drag playlists, albums and artists from Spotify into Winamp's playlist window, or paste their links.
+              Double-click to play. Liked Songs is always there.
+            </p>
+          </article>
+          <article class="card">
+            <h3>No account, no login</h3>
+            <p>
+              Nostalgify talks to the Spotify app through macOS's built-in scripting. Nothing to sign up for, nothing sent
+              anywhere.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="how" class="how wrap" aria-labelledby="how-title">
+        <h2 id="how-title" class="section-title"><span>// HOW_IT_WORKS.TXT</span></h2>
+        <ol class="steps">
+          <li>
+            <b>Webamp draws the player.</b> The open-source Webamp re-implements Winamp 2 in the browser,
+            down to the skin format. Nostalgify runs it in a small window.
+          </li>
+          <li>
+            <b>Spotify plays the music.</b> Nostalgify swaps Webamp's audio engine for one that forwards every button to
+            Spotify through AppleScript.
+          </li>
+          <li>
+            <b>The display follows along.</b> Once a second, Nostalgify asks Spotify what's playing and updates the
+            marquee, clock and seek bar.
+          </li>
+        </ol>
+      </section>
+
+      <section id="install" class="install wrap" aria-labelledby="install-title">
+        <h2 id="install-title" class="section-title"><span>// INSTALL.EXE</span></h2>
+        <p class="section-lede">
+          Build it yourself in four commands. You'll need <a href="https://git-scm.com/">Git</a> and
+          <a href="https://nodejs.org/">Node.js</a> 20 or newer.
+        </p>
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span>Terminal</span>
+            <button type="button" class="terminal-copy js-copy">Copy</button>
+          </div>
+          <pre><code class="js-commands">git clone https://github.com/0xchaosbi/nostalgify.git
+cd nostalgify
+npm install
+npm run install-app</code></pre>
+        </div>
+        <ol class="install-steps after-terminal">
+          <li>
+            <span class="n">1</span>
+            <div>
+              <h3>It builds and opens</h3>
+              <p>
+                Nostalgify is built on your Mac, copied into Applications and opened. No "unidentified developer"
+                warning, because you made it.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="n">2</span>
+            <div>
+              <h3>Let it talk to Spotify</h3>
+              <p>macOS asks whether Nostalgify may control Spotify. Click <b>OK</b>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">3</span>
+            <div>
+              <h3>Press play</h3>
+              <p>Your first three skins download automatically. To update later, run <code>git pull</code> and the last two commands again.</p>
+            </div>
+          </li>
+        </ol>
+        <details class="alt-install">
+          <summary>Prefer a ready-made download?</summary>
+          <p>
+            Grab the latest <code>.zip</code> from
+            <a href="https://github.com/0xchaosbi/nostalgify/releases/latest">Releases</a>: <code>arm64</code> for
+            Apple Silicon, <code>x64</code> for Intel. Unzip it and drag <b>Nostalgify</b> into Applications. Downloaded
+            copies aren't signed by Apple, so the first time, right-click the app and choose <b>Open</b>, then
+            <b>Open</b> again. On newer macOS versions, go to System Settings, then Privacy &amp; Security, and click
+            <b>Open Anyway</b>.
+          </p>
+        </details>
+      </section>
+
+      <section id="skins" class="skins wrap" aria-labelledby="skins-title">
+        <h2 id="skins-title" class="section-title"><span>// GET_MORE_SKINS.TXT</span></h2>
+        <p class="section-lede">
+          Nostalgify comes with three skins. There are over 100,000 more in the
+          <a href="https://skins.webamp.org/">Winamp Skin Museum</a>, all free to browse.
+        </p>
+        <ol class="install-steps four">
+          <li>
+            <span class="n">1</span>
+            <div>
+              <h3>Find one</h3>
+              <p>
+                Go to <a href="https://skins.webamp.org/">skins.webamp.org</a>. Scroll, type in the <b>Search...</b> box,
+                or hit <b>Random Skin</b>.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="n">2</span>
+            <div>
+              <h3>Try it on</h3>
+              <p>Click a skin. It opens in a working player, so you can see it before you download it.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">3</span>
+            <div>
+              <h3>Download</h3>
+              <p>Click <b>Download</b> under the player. You get a <code>.wsz</code> file.</p>
+            </div>
+          </li>
+          <li>
+            <span class="n">4</span>
+            <div>
+              <h3>Drop it in</h3>
+              <p>
+                In Nostalgify, choose <b>Skins → Open Skins Folder</b> and drag the file in. It shows up in the Skins
+                menu straight away.
+              </p>
+            </div>
+          </li>
+        </ol>
+        <div class="readme skin-notes">
+          <ul>
+            <li>
+              Prefer the <a href="https://archive.org/details/winampskins">Internet Archive</a>? On a skin's page, find
+              <b>Download Options</b>, click <b>Show All</b>, then click the file ending in <code>.wsz</code>.
+            </li>
+            <li>
+              Classic Winamp 2 skins only. Winamp 3 and 5 skins, which end in <code>.wal</code>, won't work.
+            </li>
+            <li>If your browser saves a skin as <code>.zip</code>, drop it in as is. Don't unzip it.</li>
+            <li>Skins belong to their authors. The <b>Readme</b> button in the Skin Museum shows their notes.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="faq" class="faq wrap" aria-labelledby="faq-title">
+        <h2 id="faq-title" class="section-title"><span>// FAQ.TXT</span></h2>
+        <details>
+          <summary>Is this Winamp?</summary>
+          <p>
+            No. It's an independent fan project and isn't affiliated with Winamp or Spotify. It uses Webamp, an
+            open-source re-implementation of the Winamp 2 interface, to display classic skins.
+          </p>
+        </details>
+        <details>
+          <summary>Does it work with a free Spotify account?</summary>
+          <p>
+            It should. Nostalgify only presses Spotify's own buttons, so it can do whatever your Spotify app allows on
+            your plan.
+          </p>
+        </details>
+        <details>
+          <summary>Can I browse my whole Spotify library?</summary>
+          <p>
+            Not directly. Spotify only shares your library through its developer API, which would need every user to
+            register as a Spotify developer. Instead, Nostalgify has a shelf: drag the playlists, albums and artists
+            you love into the playlist window and they stay there. For anything else, press Eject, pick it in Spotify,
+            and Nostalgify hops back.
+          </p>
+        </details>
+        <details>
+          <summary>Why is Spotify flashing when Nostalgify starts?</summary>
+          <p>
+            Spotify insists on coming to the front when it launches. Nostalgify hides it again straight away. Leaving
+            Spotify open avoids the flash.
+          </p>
+        </details>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <div class="donate">
+        <div>
+          <h2>Nostalgify is free.</h2>
+          <p>
+            None of this exists without the people who saved these skins. If Nostalgify made you smile, please consider
+            a donation to the Internet Archive. They keep the Winamp Skin Collection, and millions of other pieces of
+            internet history, online for everyone.
+          </p>
+        </div>
+        <a class="btn btn-primary" href="https://archive.org/donate"><span class="btn-face">♥ Donate to the Internet Archive</span></a>
+      </div>
+      <p>
+        Made with love and dial-up nostalgia. Player by
+        <a href="https://github.com/captbaritone/webamp">Webamp</a> (MIT). Skins by their original authors, via the
+        <a href="https://skins.webamp.org/">Winamp Skin Museum</a> and the
+        <a href="https://archive.org/details/winampskins">Internet Archive</a>. Nostalgify is not affiliated with Winamp,
+        Spotify, or anyone whose skin appears here.
+      </p>
+      <p class="skin-credit">Current skin: <b class="js-skin-name">Green Dimension V2</b> by <span class="js-skin-author"></span></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/webamp@2.3.1/built/webamp.bundle.min.js"></script>
+    <script src="site.js"></script>
+  </body>
+</html>
