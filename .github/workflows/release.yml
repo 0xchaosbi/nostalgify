@@ -1,0 +1,35 @@
+# Builds the Mac downloads when a version tag is pushed, and opens a draft release.
+#   npm version patch && git push --follow-tags
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build Apple Silicon and Intel apps
+        run: npm run package:release
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" out/Nostalgify-*.zip \
+            --draft \
+            --title "Nostalgify $GITHUB_REF_NAME" \
+            --generate-notes
